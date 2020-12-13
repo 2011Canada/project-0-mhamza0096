@@ -4,6 +4,10 @@ import java.io.Console;
 import java.util.InputMismatchException;
 import java.util.Scanner;
 
+import com.revature.models.User;
+import com.revature.repositories.LoginDAO;
+import com.revature.services.EmployeeServices;
+
 public class Menus {
 	
 	public void mainMenu() {
@@ -52,14 +56,14 @@ public class Menus {
 		Scanner s = new Scanner(System.in);
 		
 		System.out.print("Enter username :");
-		String username = s.nextLine();
+		String userName = s.nextLine();
 		
 		System.out.print("Enter Password :");
 		String password = s.nextLine();
 		
 		/////////////////////////////////////////////////////////////////////////
-		
-		
+		LoginDAO ldao = new LoginDAO();
+		User u = ldao.login(userName, password);
 		//////////////////////////////////////////////////////////////////////////
 		System.out.print("Logging in.");
 		for (int i = 0; i < 10; i++) {
@@ -70,7 +74,13 @@ public class Menus {
 				e.printStackTrace();
 			}
 		}
-		employeeMenu();
+		if (u.getType().equals("employee")) {
+			employeeMenu(u);	
+		}
+		else {
+			//customer
+		}
+		
 		
 		
 		
@@ -98,11 +108,30 @@ public class Menus {
 		
 	}
 	
-	public void employeeMenu() {
-		System.out.println("\nWelcome [name of employee]" + 
+	public void employeeMenu(User u) {
+		System.out.println("\nWelcome " + u.getName() +  
 							"\n1. Approve or Reject accounts" + 
 							"\n2. View customers bank account" + 
 							"\n3. View transaction logs");
+		
+		Scanner s = new Scanner(System.in);
+		int choice = s.nextInt();
+		EmployeeServices es = new EmployeeServices();
+		switch (choice) {
+				case 1:
+					//approve or reject accounts
+					es.approveOrRejectAccounts();
+				break;
+
+				case 2:
+					//view customers bank account
+					es.getAllCustomersAccounts();
+				break;
+				
+				case 3:
+					es.getAllTransactions();
+				break;
+		}
 		
 							
 	}

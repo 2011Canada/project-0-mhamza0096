@@ -2,31 +2,22 @@ package com.revature.models;
 
 public class Customer extends User {
 
-	private int accountNumber;
 	private String address;
 	private String phoneNumber;
 	private boolean activeAccount;
 	
 	
-	public Customer(String name, String type, int accountNumber, String address, String phoneNumber) {
-		super(name, type);
-		this.accountNumber = accountNumber;
+	public Customer(String name, String type, String userName, String password, int accountNumber, String address, String phoneNumber) {
+		super(name, userName, password, type);
 		this.address = address;
 		this.phoneNumber = phoneNumber;
 		this.activeAccount = false;
 	}
-
-
-	public int getAccountNumber() {
-		return accountNumber;
+	
+	public Customer() {
+		super();
 	}
-
-
-	public void setAccountNumber(int accountNumber) {
-		this.accountNumber = accountNumber;
-	}
-
-
+	
 	public String getAddress() {
 		return address;
 	}
@@ -45,6 +36,16 @@ public class Customer extends User {
 	public void setPhoneNumber(String phoneNumber) {
 		this.phoneNumber = phoneNumber;
 	}
+
+	public boolean getActiveAccount() {
+		return activeAccount;
+	}
+
+	public void setActiveAccount(boolean activeAccount) {
+		this.activeAccount = activeAccount;
+	}
+	
+	
 	
 	
 	
