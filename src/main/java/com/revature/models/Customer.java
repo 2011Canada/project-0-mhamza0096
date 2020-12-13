@@ -4,14 +4,12 @@ public class Customer extends User {
 
 	private String address;
 	private String phoneNumber;
-	private boolean activeAccount;
 	
 	
-	public Customer(String name, String type, String userName, String password, int accountNumber, String address, String phoneNumber) {
+	public Customer(String name, String type, String userName, String password, String address, String phoneNumber) {
 		super(name, userName, password, type);
 		this.address = address;
 		this.phoneNumber = phoneNumber;
-		this.activeAccount = false;
 	}
 	
 	public Customer() {
@@ -37,14 +35,6 @@ public class Customer extends User {
 		this.phoneNumber = phoneNumber;
 	}
 
-	public boolean getActiveAccount() {
-		return activeAccount;
-	}
-
-	public void setActiveAccount(boolean activeAccount) {
-		this.activeAccount = activeAccount;
-	}
-	
 	
 	
 	

@@ -6,6 +6,7 @@ import java.util.Scanner;
 
 import com.revature.models.User;
 import com.revature.repositories.LoginDAO;
+import com.revature.services.CustomerServices;
 import com.revature.services.EmployeeServices;
 
 public class Menus {
@@ -78,7 +79,7 @@ public class Menus {
 			employeeMenu(u);	
 		}
 		else {
-			//customer
+			customerMenu(u);
 		}
 		
 		
@@ -93,6 +94,12 @@ public class Menus {
 		System.out.print("Enter name:");
 		String name = s.nextLine();
 		
+		System.out.print("Enter username:");
+		String userName = s.nextLine();
+		
+		System.out.print("Enter password:");
+		String password = s.nextLine();
+		
 		System.out.print("Enter address:");
 		String address = s.nextLine();
 		
@@ -100,10 +107,10 @@ public class Menus {
 		String phoneNumber = s.nextLine();
 		
 		/////////////////////////////////////////////////////
-		
+		CustomerServices cs = new CustomerServices();
+		cs.createAccount(name, userName, password, address, phoneNumber);
 		/////////////////////////////////////////////////////
 		
-		System.out.println("Your account has been successfully created and is pending for approval");
 		
 		
 	}
@@ -136,7 +143,40 @@ public class Menus {
 							
 	}
 	
-	public void customerMenu() {
+	public void customerMenu(User u) {
+		System.out.println("\nWelcome " + u.getName() +  
+				"\n1. Apply for new Account" + 
+				"\n2. View Balance" + 
+				"\n3. Withdraw" + 
+				"\n4. Deposit" + 
+				"\n5. Transfer money");
+		
+		Scanner s = new Scanner(System.in);
+		int input = s.nextInt();
+		
+		CustomerServices cs = new CustomerServices();
+		
+		switch(input) {
+			case 1:
+				cs.applyForNewAccount(u);
+			break;
+			
+			case 2:
+				cs.viewBalance(u);
+			break;
+				
+			case 3:
+				cs.deposit();
+			break;
+				
+			case 4:
+				cs.deposit();
+			break;
+				
+			case 5:
+				cs.transferMoney();
+			break;
+		}
 		
 	}
 

@@ -3,14 +3,22 @@ package com.revature.models;
 public class Account {
 	
 	private int accountNumber;
+	private String accountName;
 	private int ammount;
+	private boolean activeAccount;
+	private int user_id;
 	
-	public Account(int accountNumber, int ammount) {
+	public Account(String accountName, int ammount, boolean activeAccount) {
 		super();
-		this.accountNumber = accountNumber;
+		this.accountName = accountName;
 		this.ammount = ammount;
+		this.activeAccount = activeAccount;
 	}
 	
+	public Account() {
+		// TODO Auto-generated constructor stub
+	}
+
 	public int getAccountNumber() {
 		return accountNumber;
 	}
@@ -26,6 +34,33 @@ public class Account {
 	public void setAmmount(int ammount) {
 		this.ammount = ammount;
 	}
+
+	public boolean isActiveAccount() {
+		return activeAccount;
+	}
+
+	public void setActiveAccount(boolean activeAccount) {
+		this.activeAccount = activeAccount;
+	}
+
+	public String getAccountName() {
+		return accountName;
+	}
+
+	public void setAccountName(String accountName) {
+		this.accountName = accountName;
+	}
+
+	public int getUser_id() {
+		return user_id;
+	}
+
+	public void setUser_id(int user_id) {
+		this.user_id = user_id;
+	}
+	
+	
+	
 	
 	
 

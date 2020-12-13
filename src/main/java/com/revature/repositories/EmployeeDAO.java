@@ -18,17 +18,16 @@ public class EmployeeDAO {
 	
 	private ConnectionFactory cf = ConnectionFactory.getConnectionFactory();
 	
-	public void acceptUser(Customer c) {
+	public void acceptUser(Account a) {
 		Connection conn = this.cf.getConnection();
-		String sql = "update users set active_account=? where user_name=? and password=?;";
+		String sql = "update account set active_account=? where user_id=?;";
 		try 
 		{
 			PreparedStatement ps = conn.prepareStatement(sql);
 			ps.setBoolean(1, true);
-			ps.setString(2, c.getUserName());
-			ps.setString(3, c.getPassword());
+			ps.setInt(2, a.getUser_id());
 			
-			int rowsAffected = ps.executeUpdate();
+			ps.executeUpdate();
 
 		} catch (SQLException e) {
 			e.printStackTrace();
@@ -36,44 +35,42 @@ public class EmployeeDAO {
 		
 	}
 	
-	public void rejectUser(Customer c) {
+	public void rejectUser(Account a) {
 		Connection conn = this.cf.getConnection();
-		String sql = "delete from users where user_name=? and password=?;";
+		String sql = "delete from account where user_id?;";
 		try 
 		{
 			PreparedStatement ps = conn.prepareStatement(sql);
-			ps.setString(1, c.getUserName());
-			ps.setString(2, c.getPassword());
+			ps.setInt(1, a.getUser_id());
+
 			
-			int rowsAffected = ps.executeUpdate();
+			ps.executeUpdate();
 
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}
 	}
 	
-	public List<User> approveOrRejectAccounts(){
+	public List<Account> approveOrRejectAccounts(){
 		
-		String sql = "select * from users";
+		String sql = "select * from users u natural join account a where u.user_id = a.user_id;";
 		Connection conn = this.cf.getConnection();
-		List<User> allUsers = new ArrayList<User>();
+		List<Account> allAccounts = new ArrayList<Account>();
 		try 
 		{
 			Statement s = conn.createStatement();
 			ResultSet res = s.executeQuery(sql);
 			while(res.next()) {
-				Customer c = new Customer();
-				c.setName(res.getString("name"));
-				c.setUserName(res.getString("user_name"));
-				c.setType(res.getString("type"));
-				c.setActiveAccount(res.getBoolean("active_account"));
-				c.setPassword(res.getString("password"));
-				
-				if(c.getType().equals("customer") && c.getActiveAccount() == false) {
-					allUsers.add(c);
+				Account a = new Account();
+				a.setAccountNumber(res.getInt("account_number"));
+				a.setAccountName(res.getString("account_name"));
+				a.setAmmount(res.getInt("ammount"));
+				a.setUser_id(res.getInt("user_id"));
+				if(res.getString("type").equals("customer") && res.getBoolean("active_account") == false) {
+					allAccounts.add(a);
 				}
 			}
-			return allUsers;
+			return allAccounts;
 			
 		} catch (SQLException e) {
 			e.printStackTrace();
@@ -93,7 +90,11 @@ public class EmployeeDAO {
 			ResultSet res = s.executeQuery(sql);
 			
 			while(res.next()) {
-				Account a = new Account(res.getInt("account_number"), res.getInt("ammount"));
+				Account a = new Account();
+				a.setAccountName(res.getString("account_name"));
+				a.setAccountNumber(res.getInt("account_number"));
+				a.setAmmount(res.getInt("ammount"));
+				a.setActiveAccount(res.getBoolean("active_account"));
 				acc.add(a);
 			}
 			return acc;

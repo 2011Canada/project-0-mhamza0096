@@ -13,19 +13,19 @@ public class EmployeeServices {
 
 	public void approveOrRejectAccounts() {
 		EmployeeDAO emdao = new EmployeeDAO();
-		List<User> allUsers = emdao.approveOrRejectAccounts();
-		for (int i = 0; i < allUsers.size(); i++) {
-			System.out.print("Name: " + allUsers.get(i).getName() + ", approve (a) or reject (r):");
+		List<Account> allAccounts = emdao.approveOrRejectAccounts();
+		for (int i = 0; i < allAccounts.size(); i++) {
 			Scanner s = new Scanner(System.in);
+			System.out.println("Approve(a) or Reject(r) " + allAccounts.get(i).getAccountName() + " of ammount " + allAccounts.get(i).getAmmount());
 			String input = s.next();
 			
 			if(input.equals("a")) {
 				//accept user
-				emdao.acceptUser((Customer) allUsers.get(i));
+				emdao.acceptUser(allAccounts.get(i));
 			}
 			else {
 				//remove user
-				emdao.rejectUser((Customer) allUsers.get(i));
+				emdao.rejectUser(allAccounts.get(i));
 			}
 		}
 	}

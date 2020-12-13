@@ -5,6 +5,7 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 
+import com.revature.models.Customer;
 import com.revature.models.Employee;
 import com.revature.models.User;
 import com.revature.util.ConnectionFactory;
@@ -20,8 +21,7 @@ public class LoginDAO {
 		try 
 		{
 			
-			//String sql = "select * from \"users\" where user_name = '" + userName + "' and \"password\" = '" + password + "';";
-			String sql = "select * from users;";
+			String sql = "select * from users where user_name = '" + userName + "' and \"password\" = '" + password + "';";
 			
 			Statement s = conn.createStatement();
 			ResultSet res = s.executeQuery(sql);
@@ -31,10 +31,17 @@ public class LoginDAO {
 					u = new Employee();
 					u.setName(res.getString("name"));
 					u.setType(res.getString("type"));
+					u.setUser_id(res.getInt("user_id"));
 					return u;
 				}
 				else {
-					
+					u = new Customer();
+					u.setName(res.getString("name"));
+					u.setUserName(res.getString("user_name"));
+					u.setUser_id(res.getInt("user_id"));
+					u.setType(res.getString("type"));
+					u.setUser_id(res.getInt("user_id"));
+					return u;
 				}
 				
 			}
