@@ -166,7 +166,7 @@ public class Menus {
 			break;
 				
 			case 3:
-				cs.deposit();
+				cs.withDraw();
 			break;
 				
 			case 4:

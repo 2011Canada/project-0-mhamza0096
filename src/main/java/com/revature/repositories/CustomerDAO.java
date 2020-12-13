@@ -17,6 +17,62 @@ public class CustomerDAO {
 	
 	ConnectionFactory cf = ConnectionFactory.getConnectionFactory();
 	
+	public void updateBalance(int accountNumber, int withdrawAmmount) {
+		Connection conn = cf.getConnection();
+		String sql = "update account set ammount = ammount - ? where account_number = ?;";
+		PreparedStatement ps;
+		try 
+		{
+			ps = conn.prepareStatement(sql);
+			ps.setInt(1, withdrawAmmount);
+			ps.setInt(2, accountNumber);
+			ps.execute();
+			
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+
+	}
+	
+	public int withdraw(int accountNumber){
+		Connection conn = cf.getConnection();
+		String sql = "select ammount from account where account_number = ?;";
+		PreparedStatement ps;
+		try {
+			
+			ps = conn.prepareStatement(sql);
+			ps.setInt(1, accountNumber);
+			ResultSet res = ps.executeQuery();
+			
+			while(res.next()) {
+				int ammount = res.getInt("ammount");
+				return ammount;
+			}
+			
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+
+		return 0;
+	}
+	
+	public void deposit(int accountNumber, int ammount) {
+		Connection conn = cf.getConnection();
+		
+		String sql = "update account set ammount = ammount + ? where account_number = ?";
+		
+		try {
+			
+			PreparedStatement ps = conn.prepareStatement(sql);
+			ps.setInt(1, ammount);
+			ps.setInt(2, accountNumber);
+			ps.execute();
+			
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+	}
+	
 	public void applyForNewAccount(Account a, User u) {
 		
 		String sql = "insert into account (account_name, ammount, active_account, user_id)"
@@ -79,5 +135,7 @@ public class CustomerDAO {
 		}
 		
 	}
+
+
 
 }

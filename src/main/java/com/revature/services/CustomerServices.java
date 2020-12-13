@@ -1,5 +1,6 @@
 package com.revature.services;
 
+import java.sql.SQLException;
 import java.util.List;
 import java.util.Scanner;
 
@@ -43,11 +44,39 @@ public class CustomerServices {
 	}
 	
 	public void withDraw() {
+		Scanner s = new Scanner(System.in);
+		CustomerDAO cdao = new CustomerDAO();
+		
+		System.out.print("Please enter the account number you like to withdraw from");
+		int accountNumber = s.nextInt();
+		
+		System.out.print("Please enter the ammount you like to withdraw:");
+		int withdrawAmmount = s.nextInt();
+		
+		int ammount = cdao.withdraw(accountNumber);
+		
+		if(withdrawAmmount > ammount) {
+			System.out.println("You dont have enough funds in your current account");
+		}
+		else{
+			System.out.println("You withdrew " + withdrawAmmount);
+			cdao.updateBalance(accountNumber, withdrawAmmount);
+		}
+		
 		
 	}
+
 	
 	public void deposit() {
+		CustomerDAO cdao = new CustomerDAO();
+		Scanner s = new Scanner(System.in);
 		
+		System.out.print("Please enter the account number you like to deposit to:");
+		int accountNumber = s.nextInt();
+		System.out.print("Please enter the ammount you like to deposit:");
+		int ammount = s.nextInt();
+		
+		cdao.deposit(accountNumber, ammount);
 	}
 	
 	public void transferMoney() {
