@@ -109,6 +109,8 @@ public class CustomerDAO {
 				Account a = new Account();
 				a.setAccountName(res.getString("account_name"));
 				a.setAmmount(res.getInt("ammount"));
+				a.setAccountNumber(res.getInt("account_number"));
+				a.setActiveAccount(res.getBoolean("active_account"));
 				accList.add(a);
 			}
 			return accList;

@@ -35,20 +35,24 @@ public class Menus {
 			{
 				System.out.println("Invalid input, please try again!");
 			}
-		}
-		switch(choice) {
+			
+			switch(choice) {
 			case 1:
 				login();
+				choice = 0;
 			break;
 			
 			case 2:
 				createNewAccount();
+				choice = 0;
 			break;
 				
 			case 3:
 				System.out.println("Thank you for Using Bank of Canada");
 			break;
 		}
+		}
+
 	}
 	
 	
@@ -56,35 +60,41 @@ public class Menus {
 		
 		Scanner s = new Scanner(System.in);
 		
-		System.out.print("Enter username :");
-		String userName = s.nextLine();
+		User u = null;
+		while(u == null) {
+			System.out.print("Enter username :");
+			String userName = s.nextLine();
+			
+			System.out.print("Enter Password :");
+			String password = s.nextLine();
+			
+			/////////////////////////////////////////////////////////////////////////
+			LoginDAO ldao = new LoginDAO();
+			u = ldao.login(userName, password);
+			
+			if(u == null) {
+				System.out.println("Incorrect username or password, please try again");
+			}
+		}
 		
-		System.out.print("Enter Password :");
-		String password = s.nextLine();
-		
-		/////////////////////////////////////////////////////////////////////////
-		LoginDAO ldao = new LoginDAO();
-		User u = ldao.login(userName, password);
 		//////////////////////////////////////////////////////////////////////////
 		System.out.print("Logging in.");
 		for (int i = 0; i < 10; i++) {
 			System.out.print(".");
 			try {
-				Thread.sleep(700);
+				Thread.sleep(500);
 			} catch (InterruptedException e) {
 				e.printStackTrace();
 			}
 		}
+		
 		if (u.getType().equals("employee")) {
-			employeeMenu(u);	
+			employeeMenu(u);
+			
 		}
 		else {
 			customerMenu(u);
 		}
-		
-		
-		
-		
 	}
 	
 	public void createNewAccount() {
@@ -116,73 +126,105 @@ public class Menus {
 	}
 	
 	public void employeeMenu(User u) {
-		System.out.println("\nWelcome " + u.getName() +  
-							"\n1. Approve or Reject accounts" + 
-							"\n2. View customers bank account" + 
-							"\n3. View transaction logs");
 		
-		Scanner s = new Scanner(System.in);
-		int choice = s.nextInt();
-		EmployeeServices es = new EmployeeServices();
-		switch (choice) {
-				case 1:
-					//approve or reject accounts
-					es.approveOrRejectAccounts();
-				break;
+		int choice = 0;
+		
+		while(choice <= 0 || choice > 4) {
+			
+			System.out.println("\n**********************************");
+			System.out.println("\nWelcome " + u.getName() +  
+								"\n1. Approve or Reject accounts" + 
+								"\n2. View customers bank account" + 
+								"\n3. View transaction logs" + 
+								"\n4. Logout");
+			
+			Scanner s = new Scanner(System.in);
+			choice = s.nextInt();
+			EmployeeServices es = new EmployeeServices();
+			switch (choice) {
+					case 1:
+						//approve or reject accounts
+						es.approveOrRejectAccounts();
+						choice = 0;
+					break;
 
-				case 2:
-					//view customers bank account
-					es.getAllCustomersAccounts();
-				break;
-				
-				case 3:
-					es.getAllTransactions();
-				break;
+					case 2:
+						//view customers bank account
+						es.getAllCustomersAccounts();
+						choice = 0;
+					break;
+					
+					case 3:
+						es.getAllTransactions();
+						choice = 0;
+					break;
+					
+					case 4:
+						//do nothing 
+					break;
+			}	
+			
 		}
 		
-							
+			
 	}
 	
 	public void customerMenu(User u) {
-		System.out.println("\nWelcome " + u.getName() +  
-				"\n1. Apply for new Account" + 
-				"\n2. View Balance" + 
-				"\n3. Withdraw" + 
-				"\n4. Deposit" + 
-				"\n5. Transfer money" + 
-				"\n6. Check Recieving money");
+		int input = 0;
 		
-		Scanner s = new Scanner(System.in);
-		int input = s.nextInt();
 		
-		CustomerServices cs = new CustomerServices();
-		
-		switch(input) {
+		while(input <= 0 || input > 7) {
+			System.out.println("\n**********************************");
+			System.out.println("\nWelcome " + u.getName() +  
+					"\n1. Apply for new Account" + 
+					"\n2. View Balance" + 
+					"\n3. Withdraw" + 
+					"\n4. Deposit" + 
+					"\n5. Transfer money" + 
+					"\n6. Check Recieving money" + 
+					"\n7. Logout");
+			
+			Scanner s = new Scanner(System.in);
+			input = s.nextInt();
+			
+			CustomerServices cs = new CustomerServices();
+			
+			switch(input) {
 			case 1:
 				cs.applyForNewAccount(u);
+				input = 0;
 			break;
 			
 			case 2:
 				cs.viewBalance(u);
+				input = 0;
 			break;
 				
 			case 3:
 				cs.withDraw(u);
+				input = 0;
 			break;
 				
 			case 4:
 				cs.deposit(u);
+				input = 0;
 			break;
 				
 			case 5:
 				cs.transferMoney();
+				input = 0;
 			break;
 			
 			case 6:
 				cs.checkRecievingMoney(u);
+				input = 0;
+			break;
+			
+			case 7:
+				//do nothing let the method end
 			break;
 		}
-		
+		}
 	}
 
 }

@@ -40,7 +40,9 @@ public class CustomerServices {
 		List<Account> accList = cdao.viewBalance(u);
 		
 		for(int i = 0; i < accList.size(); i++) {
-			System.out.println(accList.get(i).getAccountName() + " " + accList.get(i).getAmmount());
+			if(accList.get(i).isActiveAccount()) {
+				System.out.println("Account number: " + accList.get(i).getAccountNumber() + " " + accList.get(i).getAccountName() + " " + accList.get(i).getAmmount());
+			}
 		}
 		
 	}
