@@ -149,7 +149,8 @@ public class Menus {
 				"\n2. View Balance" + 
 				"\n3. Withdraw" + 
 				"\n4. Deposit" + 
-				"\n5. Transfer money");
+				"\n5. Transfer money" + 
+				"\n6. Check Recieving money");
 		
 		Scanner s = new Scanner(System.in);
 		int input = s.nextInt();
@@ -166,15 +167,19 @@ public class Menus {
 			break;
 				
 			case 3:
-				cs.withDraw();
+				cs.withDraw(u);
 			break;
 				
 			case 4:
-				cs.deposit();
+				cs.deposit(u);
 			break;
 				
 			case 5:
 				cs.transferMoney();
+			break;
+			
+			case 6:
+				cs.checkRecievingMoney(u);
 			break;
 		}
 		

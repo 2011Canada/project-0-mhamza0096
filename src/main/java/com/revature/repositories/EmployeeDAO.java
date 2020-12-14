@@ -116,7 +116,7 @@ public class EmployeeDAO {
 			ResultSet res = s.executeQuery(sql);
 			
 			while(res.next()) {
-				Transaction t = new Transaction(res.getInt("transaction_ammount"), res.getString("transaction_comment"));
+				Transaction t = new Transaction(res.getString("transaction_comment"));
 				acc.add(t);
 			}
 			return acc;

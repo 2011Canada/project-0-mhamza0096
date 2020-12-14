@@ -43,8 +43,7 @@ public class EmployeeServices {
 		EmployeeDAO emdao = new EmployeeDAO();
 		List<Transaction> al = emdao.getAllTransactions();
 		for (int i = 0; i < al.size(); i++) {
-			System.out.println(" Ammount: " + al.get(i).getTransactionAmmount()+ 
-								" Comment: " + al.get(i).getTransactioComment());
+			System.out.println(al.get(i).getTransactioComment());
 		}
 	}
 }
