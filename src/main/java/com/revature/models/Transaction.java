@@ -2,20 +2,20 @@ package com.revature.models;
 
 public class Transaction {
 	
-	private String transactioComment;
+	private String transactionComment;
 	
 	public Transaction(String transactioComment) {
 		super();
-		this.transactioComment = transactioComment;
+		this.transactionComment = transactioComment;
 	}
 
 
-	public String getTransactioComment() {
-		return transactioComment;
+	public String getTransactionComment() {
+		return transactionComment;
 	}
 
 	public void setTransactioComment(String transactioComment) {
-		this.transactioComment = transactioComment;
+		this.transactionComment = transactioComment;
 	}
 	
 	
